@@ -3,7 +3,7 @@ module.exports = {
   extends: ["expo", "prettier"],
   plugins: ["prettier"],
   rules: {
-    "prettier/prettier": "warning",
+    "prettier/prettier": "warn",
   },
   overrides: [
     {
