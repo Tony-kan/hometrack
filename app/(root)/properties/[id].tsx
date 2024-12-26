@@ -1,13 +1,14 @@
-import {View, Text} from 'react-native'
-import React from 'react'
-import {useLocalSearchParams} from "expo-router";
+import { View, Text } from "react-native";
+import React from "react";
+import { useLocalSearchParams } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Property = () => {
-   const {id} = useLocalSearchParams()
-    return (
-        <View>
-            <Text>Property id : {id}</Text>
-        </View>
-    )
-}
-    export default Property
+  const { id } = useLocalSearchParams();
+  return (
+    <SafeAreaView>
+      <Text>Property id : {id}</Text>
+    </SafeAreaView>
+  );
+};
+export default Property;
