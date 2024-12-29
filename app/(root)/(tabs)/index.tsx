@@ -5,6 +5,7 @@ import images from "@/constants/images";
 import icons from "@/constants/icons";
 import Search from "@/components/search";
 import { Card, FeaturedCard } from "@/components/Cards";
+import Filters from "@/components/Filters";
 
 export default function Index() {
   const onFeaturedCardPress = () => {};
@@ -43,6 +44,7 @@ export default function Index() {
             <Text className="text-base font-rubik-bold text-primary-300">See All</Text>
           </TouchableOpacity>
         </View>
+        <Filters />
         <View className="flex flex-row gap-5 mt-5">
           <Card onPress={onCardPress} />
           <Card onPress={onCardPress} />
