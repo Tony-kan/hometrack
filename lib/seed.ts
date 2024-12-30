@@ -11,7 +11,7 @@ const COLLECTIONS = {
 
 const propertyTypes = [
   "House",
-  "Townhomes",
+  "TownHouse",
   "Condos",
   "Duplexes",
   "Studios",
@@ -22,13 +22,13 @@ const propertyTypes = [
 
 const facilities = [
   "Laundry",
-  "Car Parking",
-  "Sports Center",
+  "Car-Parking",
+  "Sports-Center",
   "Cutlery",
   "Gym",
-  "Swimming pool",
+  "Swimming-Pool",
   "Wifi",
-  "Pet Center",
+  "Pet-Center",
 ];
 
 function getRandomSubset<T>(array: T[], minItems: number, maxItems: number): T[] {
