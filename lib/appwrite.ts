@@ -1,12 +1,7 @@
 import { Account, Avatars, Client, Databases, OAuthProvider, Query } from "react-native-appwrite";
 import * as Linking from "expo-linking";
 import { openAuthSessionAsync } from "expo-web-browser";
-
-interface getPropertiesProps {
-  filter: string;
-  query: string;
-  limit?: number;
-}
+import { getPropertiesProps } from "@/types/type";
 
 export const config = {
   platform: "com.brainingx.hometrack",

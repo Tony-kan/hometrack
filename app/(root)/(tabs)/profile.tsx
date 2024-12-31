@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import icons from "@/constants/icons";
-import images from "@/constants/images";
+// import images from "@/constants/images";
 import { settings } from "@/constants/data";
 import { useGlobalContext } from "@/lib/global-provider";
 import { logout } from "@/lib/appwrite";
@@ -40,7 +40,7 @@ const Profile = () => {
     const result = await logout();
     if (result) {
       Alert.alert("Success", "You have logged out");
-      await refetch();
+      refetch();
     } else {
       Alert.alert("Error", "An Error occurred during Logging Out");
     }

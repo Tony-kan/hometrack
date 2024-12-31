@@ -1,25 +1,7 @@
 import React, { createContext, ReactNode, useContext } from "react";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getCurrentUser } from "@/lib/appwrite";
-
-interface User {
-  $id: string;
-  name: string;
-  email: string;
-  avatar: string;
-}
-
-interface GlobalContextType {
-  isLoggedIn: boolean;
-  user: User | null;
-  loading: boolean;
-  // refetch: (newParams?: Record<string, string | number>) => Promise<void>;
-  refetch: () => void;
-}
-
-interface GlobalProviderProps {
-  children: ReactNode;
-}
+import { GlobalContextType, GlobalProviderProps } from "@/types/type";
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 

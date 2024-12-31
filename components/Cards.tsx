@@ -3,7 +3,6 @@ import React from "react";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { Models } from "react-native-appwrite";
-import { descriptions } from "jest-config";
 
 interface CardProps {
   item: Models.Document;

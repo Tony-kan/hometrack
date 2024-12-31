@@ -1,18 +1,6 @@
 import { Alert } from "react-native";
 import { useEffect, useState, useCallback } from "react";
-
-interface UseAppwriteOptions<T, P extends Record<string, string | number>> {
-  fn: (params: P) => Promise<T>;
-  params?: P;
-  skip?: boolean;
-}
-
-interface UseAppwriteReturn<T, P> {
-  data: T | null;
-  loading: boolean;
-  error: string | null;
-  refetch: (newParams: P) => Promise<void>;
-}
+import { UseAppwriteOptions, UseAppwriteReturn } from "@/types/type";
 
 export const useAppwrite = <T, P extends Record<string, string | number>>({
   fn,

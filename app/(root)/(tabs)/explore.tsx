@@ -1,28 +1,20 @@
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  Button,
-  ActivityIndicator,
-} from "react-native";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import images from "@/constants/images";
+// import images from "@/constants/images";
 import icons from "@/constants/icons";
 import Search from "@/components/search";
-import { Card, FeaturedCard } from "@/components/Cards";
+import { Card } from "@/components/Cards";
 import Filters from "@/components/Filters";
-import { useGlobalContext } from "@/lib/global-provider";
-import seed from "@/lib/seed";
+// import { useGlobalContext } from "@/lib/global-provider";
+// import seed from "@/lib/seed";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
 import NoResults from "@/components/NoResults";
 
 export default function Explore() {
-  const { user } = useGlobalContext();
+  // const { user } = useGlobalContext();
 
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
