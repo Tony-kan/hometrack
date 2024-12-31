@@ -17,6 +17,8 @@ import { facilities } from "@/constants/data";
 
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getPropertyById } from "@/lib/appwrite";
+import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+//Todo : the map should use correct geo-location from database
 
 const Property = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -29,6 +31,10 @@ const Property = () => {
       id: id!,
     },
   });
+
+  const latitude = -13.9669;
+  const longitude = 33.7873;
+  console.log("Properties data : ", property);
 
   return (
     <View>
@@ -179,10 +185,34 @@ const Property = () => {
             <Text className="text-black-300 text-xl font-rubik-bold">Location</Text>
             <View className="flex flex-row items-center justify-start mt-4 gap-2">
               <Image source={icons.location} className="w-7 h-7" />
+
               <Text className="text-black-200 text-sm font-rubik-medium">{property?.address}</Text>
             </View>
-
-            <Image source={images.map} className="h-52 w-full mt-5 rounded-xl" />
+            <MapView
+              provider={PROVIDER_DEFAULT}
+              initialRegion={{
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              }}
+              // mapType="mutedStandard"
+              userInterfaceStyle="light"
+              style={{
+                marginTop: 20,
+                width: "100%",
+                height: 208,
+                borderRadius: 12,
+              }}
+            >
+              <Marker
+                coordinate={{ latitude: latitude, longitude: longitude }}
+                image={icons.location}
+                title="Its located here"
+                className="h-12 w-12"
+              />
+            </MapView>
+            {/*<Image source={images.map} className="h-52 w-full mt-5 rounded-xl" />*/}
           </View>
 
           {property?.reviews.length > 0 && (
