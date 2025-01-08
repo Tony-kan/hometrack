@@ -48,7 +48,15 @@ export default function Index() {
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={properties}
-        renderItem={({ item }) => <Card item={item} onPress={() => handleCardPress(item.$id)} />}
+        renderItem={({ item }) => (
+          <Card
+            item={item}
+            onWishlistChange={() =>
+              refetch({ filter: params.filter!, query: params.query!, limit: 6 })
+            }
+            onPress={() => handleCardPress(item.$id)}
+          />
+        )}
         keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
@@ -89,7 +97,13 @@ export default function Index() {
                 <FlatList
                   data={latestProperties}
                   renderItem={({ item }) => (
-                    <FeaturedCard item={item} onPress={() => handleCardPress(item.$id)} />
+                    <FeaturedCard
+                      item={item}
+                      onWishlistChange={() =>
+                        refetch({ filter: params.filter!, query: params.query!, limit: 6 })
+                      }
+                      onPress={() => handleCardPress(item.$id)}
+                    />
                   )}
                   keyExtractor={(item) => item.$id}
                   horizontal
@@ -106,10 +120,6 @@ export default function Index() {
               </TouchableOpacity>
             </View>
             <Filters />
-            {/*<View className="flex flex-row gap-5 mt-5">*/}
-            {/*  <Card onPress={onCardPress} />*/}
-            {/*  <Card onPress={onCardPress} />*/}
-            {/*</View>*/}
           </View>
         }
       />

@@ -26,7 +26,7 @@ const Property = () => {
 
   const windowHeight = Dimensions.get("window").height;
 
-  const { data: property } = useAppwrite({
+  const { data: property, refetch } = useAppwrite({
     fn: getPropertyById,
     params: {
       id: id!,
@@ -60,7 +60,13 @@ const Property = () => {
 
               <View className="flex flex-row items-center gap-3">
                 {/* <Image source={icons.heart} className="size-7" tintColor={"#FF8000"} /> */}
-                {property && <WishlistButton item={property} size={7} />}
+                {property && (
+                  <WishlistButton
+                    onWishlistChange={() => refetch({ id: id! })}
+                    item={property}
+                    size={7}
+                  />
+                )}
                 <Image source={icons.send} className="size-7" />
               </View>
             </View>

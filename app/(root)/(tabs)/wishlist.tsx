@@ -48,7 +48,15 @@ export default function Wishlist() {
           WishlistId: item.$id, // Retain unique ID for handling card press
         }))}
         renderItem={({ item }) => (
-          <WishlistCard item={item} onPress={() => handleCardPress(item.$id || item.WishlistId)} />
+          <WishlistCard
+            item={item}
+            onWishlistChange={() =>
+              refetch({
+                userId: user?.$id!,
+              })
+            }
+            onPress={() => handleCardPress(item.$id || item.WishlistId)}
+          />
         )}
         keyExtractor={(item) => item.$id || item.WishlistId}
         numColumns={2}

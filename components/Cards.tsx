@@ -8,9 +8,10 @@ import WishlistButton from "./wishlistButton";
 interface CardProps {
   item: Models.Document;
   onPress: () => void;
+  onWishlistChange: () => void;
 }
 
-export const FeaturedCard = ({ item, onPress }: CardProps) => {
+export const FeaturedCard = ({ item, onPress, onWishlistChange }: CardProps) => {
   const { image, name, address, rating, price } = item;
   return (
     <TouchableOpacity onPress={onPress} className="flex  flex-col items-start w-60 h-80 relative">
@@ -29,14 +30,14 @@ export const FeaturedCard = ({ item, onPress }: CardProps) => {
         <View className="flex flex-row items-center  justify-between w-full">
           <Text className="text-xl font-rubik-extraBold text-white mt-2">{`$ ${price}`}</Text>
           {/* <Image source={icons.heart} className="size-5" /> */}
-          <WishlistButton size={5} item={item} />
+          <WishlistButton size={5} item={item} onWishlistChange={onWishlistChange} />
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export const Card = ({ item, onPress }: CardProps) => {
+export const Card = ({ item, onPress, onWishlistChange }: CardProps) => {
   const { image, name, address, rating, price } = item;
   return (
     <TouchableOpacity
@@ -57,14 +58,14 @@ export const Card = ({ item, onPress }: CardProps) => {
         <View className="flex flex-row items-center  justify-between mt-2">
           <Text className="text-base font-rubik-bold text-primary-300">{`$ ${price}`}</Text>
           {/* <Image source={icons.heart} className="size-5" /> */}
-          <WishlistButton size={5} item={item} />
+          <WishlistButton size={5} item={item} onWishlistChange={onWishlistChange} />
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export const WishlistCard = ({ item, onPress }: CardProps) => {
+export const WishlistCard = ({ item, onPress, onWishlistChange }: CardProps) => {
   const { image, name, address, rating, price } = item;
   return (
     <TouchableOpacity
@@ -89,7 +90,7 @@ export const WishlistCard = ({ item, onPress }: CardProps) => {
             {/* <TouchableOpacity>
               <Image source={wishlisted ? icons.heartFilled : icons.heart} className="size-5" />
             </TouchableOpacity> */}
-            <WishlistButton size={5} item={item} />
+            <WishlistButton size={5} item={item} onWishlistChange={onWishlistChange} />
           </View>
           <View>
             <Text className="text-base font-rubik-bold text-primary-300">{`$ ${price}`}</Text>
