@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // import images from "@/constants/images";
 import icons from "@/constants/icons";
 import Search from "@/components/search";
-import { Card } from "@/components/Cards";
+import { WishlistCard } from "@/components/Cards";
 // import Filters from "@/components/Filters";
 // import { useGlobalContext } from "@/lib/global-provider";
 // import seed from "@/lib/seed";
@@ -49,7 +49,9 @@ export default function Wishlist() {
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={properties}
-        renderItem={({ item }) => <Card item={item} onPress={() => handleCardPress(item.$id)} />}
+        renderItem={({ item }) => (
+          <WishlistCard item={item} onPress={() => handleCardPress(item.$id)} />
+        )}
         keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
@@ -80,7 +82,7 @@ export default function Wishlist() {
             <Search />
             <View className="mt-5">
               <Text className="text-xl font-rubik-bold text-black-300 mt-5">
-                Found {properties?.length} Properties
+                WishListed {properties?.length} Properties
               </Text>
             </View>
           </View>

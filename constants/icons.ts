@@ -6,6 +6,7 @@ import bell from "@/assets/icons/bell.png";
 import filter from "@/assets/icons/filter.png";
 import star from "@/assets/icons/star.png";
 import heart from "@/assets/icons/heart.png";
+import heartFilled from "@/assets/icons/heartfilled.png";
 import backArrow from "@/assets/icons/back-arrow.png";
 import calendar from "@/assets/icons/calendar.png";
 import info from "@/assets/icons/info.png";
@@ -41,6 +42,7 @@ export default {
   filter,
   star,
   heart,
+  heartFilled,
   backArrow,
   calendar,
   info,

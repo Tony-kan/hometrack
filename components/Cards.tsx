@@ -61,3 +61,40 @@ export const Card = ({ item: { image, name, address, rating, price }, onPress }:
     </TouchableOpacity>
   );
 };
+
+export const WishlistCard = ({
+  item: { image, name, address, rating, price },
+  onPress,
+}: CardProps) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      className="flex w-full mt-4 px-3 py-2 rounded-lg bg-white shadow-lg shadow-black-100/70 relative"
+    >
+      <View className="flex flex-row items-center absolute px-2 top-4 left-16 bg-white/90 p-1 rounded-lg gap-2 ">
+        <Image source={icons.star} className="size-3" />
+        <Text className="text-md font-rubik-bold text-primary-300 ml-0.5">{rating}</Text>
+      </View>
+
+      <View className="flex flex-row justify-between gap-2">
+        <View className="flex flex-row items-center justify-start">
+          <Image source={{ uri: image }} className="w-28 h-28 rounded-lg -z-40" />
+        </View>
+        <View className="flex justify-center">
+          <Text className="text-base font-rubik-bold text-black-300">{name}</Text>
+          <Text className="text-xs font-rubik text-black ">{address}</Text>
+        </View>
+        <View className="flex items-center justify-between my-4">
+          <View className="flex">
+            <TouchableOpacity>
+              <Image source={icons.heartFilled} className="size-5" />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text className="text-base font-rubik-bold text-primary-300">{`$ ${price}`}</Text>
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
