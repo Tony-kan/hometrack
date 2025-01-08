@@ -5,8 +5,6 @@ import {
   Databases,
   OAuthProvider,
   Query,
-  Permission,
-  Role,
   ID,
 } from "react-native-appwrite";
 import * as Linking from "expo-linking";
@@ -118,6 +116,9 @@ export async function getProperties({ filter, query, limit }: getPropertiesProps
           Query.search("name", query),
           Query.search("address", query),
           Query.search("type", query),
+          Query.contains("name", query),
+          Query.contains("address", query),
+          Query.contains("type", query),
         ]),
       );
     }
@@ -164,10 +165,10 @@ export async function getWishlistProperties({ userId }: { userId: string }) {
 
 export async function createWishlistProperties({
   userId,
-  property,
+  propertyId,
 }: {
   userId: string;
-  property: string;
+  propertyId: string;
 }) {
   const result = await databases.createDocument(
     config.databaseId!,
@@ -175,7 +176,7 @@ export async function createWishlistProperties({
     ID.unique(),
     {
       user_id: userId,
-      property: property,
+      property: propertyId,
     },
   );
 
