@@ -5,11 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import icons from "@/constants/icons";
 import Search from "@/components/search";
 import { WishlistCard } from "@/components/Cards";
-// import Filters from "@/components/Filters";
-// import { useGlobalContext } from "@/lib/global-provider";
-// import seed from "@/lib/seed";
 import { useAppwrite } from "@/lib/useAppwrite";
-import { getLatestProperties, getProperties } from "@/lib/appwrite";
+import { getProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
 import NoResults from "@/components/NoResults";
 
@@ -18,9 +15,6 @@ export default function Wishlist() {
 
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
-  const { data: latestProperties, loading: latestPropertiesLoading } = useAppwrite({
-    fn: getLatestProperties,
-  });
   const {
     data: properties,
     loading: propertiesLoading,

@@ -58,7 +58,7 @@ const Property = () => {
               </TouchableOpacity>
 
               <View className="flex flex-row items-center gap-3">
-                <Image source={icons.heart} className="size-7" tintColor={"#191D31"} />
+                <Image source={icons.heart} className="size-7" tintColor={"#FF8000"} />
                 <Image source={icons.send} className="size-7" />
               </View>
             </View>

@@ -19,7 +19,7 @@ export const FeaturedCard = ({
       <Image source={images.cardGradient} className="size-full rounded-2xl absolute bottom-0" />
       <View className="flex flex-row items-center bg-white/90 px-3 py-1.5 rounded-full absolute top-5 right-5 gap-2">
         <Image source={icons.star} className="size-3.5" />
-        <Text className="text-base font-rubik-bold text-primary-300 ml-0.5">{rating}</Text>
+        <Text className="text-base font-rubik-bold text-primary-400 ml-0.5">{rating}</Text>
       </View>
       <View className="flex flex-col items-start  absolute bottom-5 inset-x-5">
         <Text className="text-xl font-rubik-extraBold text-white" numberOfLines={1}>
@@ -43,11 +43,11 @@ export const Card = ({ item: { image, name, address, rating, price }, onPress }:
       className="flex-1 w-full mt-4 px-3 py-4 rounded-lg bg-white shadow-lg shadow-black-100/70 relative"
     >
       <View className="flex flex-row items-center absolute px-2 top-5 right-5 bg-white/90 p-1 rounded-full gap-2">
-        <Image source={icons.star} className="size-2.5" />
-        <Text className="text-sm font-rubik-bold text-primary-300 ml-0.5">{rating}</Text>
+        <Image source={icons.star} className="size-3.5" />
+        <Text className="text-sm font-rubik-bold text-primary-400 ml-0.5">{rating}</Text>
       </View>
 
-      <Image source={{ uri: image }} className="w-full h-40 rounded-lg" />
+      <Image source={{ uri: image }} className="w-full h-40 rounded-lg -z-50" />
 
       <View className="flex flex-col mt-2">
         <Text className="text-base font-rubik-bold text-black-300">{name}</Text>
@@ -73,7 +73,7 @@ export const WishlistCard = ({
     >
       <View className="flex flex-row items-center absolute px-2 top-4 left-16 bg-white/90 p-1 rounded-lg gap-2 ">
         <Image source={icons.star} className="size-3" />
-        <Text className="text-md font-rubik-bold text-primary-300 ml-0.5">{rating}</Text>
+        <Text className="text-md font-rubik-bold text-primary-400 ml-0.5">{rating}</Text>
       </View>
 
       <View className="flex flex-row justify-between gap-2">
@@ -84,7 +84,7 @@ export const WishlistCard = ({
           <Text className="text-base font-rubik-bold text-black-300">{name}</Text>
           <Text className="text-xs font-rubik text-black ">{address}</Text>
         </View>
-        <View className="flex items-center justify-between my-4">
+        <View className="flex items-center justify-between my-2">
           <View className="flex">
             <TouchableOpacity>
               <Image source={icons.heartFilled} className="size-5" />
