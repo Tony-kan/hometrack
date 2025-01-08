@@ -46,7 +46,9 @@ scalable experience.
 👉 **Property Details Page**: Provides comprehensive information about individual properties, including images and key
 details.
 
-👉 **Profile Page**: Customizable user settings and profile management
+👉 **Profile Page**: Customizable user settings and profile management.
+
+👉 **Wishlist Page**: Enables users to save and manage their favorite properties for easy access later.
 
 👉 **Centralized Data Fetching**: Custom-built solution inspired by TanStack’s useQuery for efficient API calls.
 
