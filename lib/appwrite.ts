@@ -6,6 +6,7 @@ import {
   OAuthProvider,
   Query,
   ID,
+  Models,
 } from "react-native-appwrite";
 import * as Linking from "expo-linking";
 import { openAuthSessionAsync } from "expo-web-browser";
@@ -152,12 +153,8 @@ export async function getPropertyById({ id }: { id: string }) {
 
 export async function getWishlistProperties({ userId }: { userId: string }) {
   try {
-    const result = await databases.getDocument(
-      config.databaseId!,
-      config.wishlistCollectionId!,
-      userId,
-    );
-    return result;
+    const result = await databases.listDocuments(config.databaseId!, config.wishlistCollectionId!);
+    return result.documents;
   } catch (error) {
     console.error(error);
   }
@@ -170,15 +167,42 @@ export async function createWishlistProperties({
   userId: string;
   propertyId: string;
 }) {
-  const result = await databases.createDocument(
+  // Check if the property already exists in the wishlist
+  const existingWishlist = await databases.listDocuments(
     config.databaseId!,
     config.wishlistCollectionId!,
-    ID.unique(),
-    {
-      user_id: userId,
-      property: propertyId,
-    },
+    [Query.equal("user_id", userId), Query.equal("property", propertyId)],
   );
 
-  return result;
+  if (existingWishlist.documents.length > 0) {
+    // If it exists, remove it from the wishlist
+    const documentId = existingWishlist.documents[0].$id;
+    await databases.deleteDocument(config.databaseId!, config.wishlistCollectionId!, documentId);
+    await databases.updateDocument(
+      config.databaseId!,
+      config.propertiesCollectionId!, // Replace with the actual property collection ID
+      propertyId,
+      { wishlisted: false },
+    );
+    return { action: "removed", documentId };
+  } else {
+    // If it doesn't exist, add it to the wishlist
+    const result = await databases.createDocument(
+      config.databaseId!,
+      config.wishlistCollectionId!,
+      ID.unique(),
+      {
+        user_id: userId,
+        property: propertyId,
+      },
+    );
+
+    await databases.updateDocument(
+      config.databaseId!,
+      config.propertiesCollectionId!, // Replace with the actual property collection ID
+      propertyId,
+      { wishlisted: true },
+    );
+    return { action: "created", document: result };
+  }
 }

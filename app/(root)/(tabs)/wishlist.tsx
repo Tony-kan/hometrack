@@ -6,12 +6,16 @@ import icons from "@/constants/icons";
 import Search from "@/components/search";
 import { WishlistCard } from "@/components/Cards";
 import { useAppwrite } from "@/lib/useAppwrite";
-import { getProperties } from "@/lib/appwrite";
+import { getProperties, getWishlistProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
 import NoResults from "@/components/NoResults";
+import { useGlobalContext } from "@/lib/global-provider";
 
 export default function Wishlist() {
-  // const { user } = useGlobalContext();
+  const { user } = useGlobalContext();
+
+  // console.log("user_id : ", user);
+  console.log("user_id : ", user?.$id);
 
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
@@ -20,29 +24,29 @@ export default function Wishlist() {
     loading: propertiesLoading,
     refetch,
   } = useAppwrite({
-    fn: getProperties,
+    fn: getWishlistProperties,
     params: {
-      filter: params.filter!,
-      query: params.query!,
-      limit: 20,
+      userId: user?.$id!,
     },
     skip: true,
   });
+  console.log("wishlist properties : ", properties);
 
   useEffect(() => {
     refetch({
-      filter: params.filter!,
-      query: params.query!,
-      limit: 20,
+      userId: user?.$id!,
     });
-  }, [params.filter, params.query]);
+  }, []);
 
   const handleCardPress = (id: string) => router.push(`/properties/${id}`);
 
   return (
     <SafeAreaView className="bg-white h-full">
       <FlatList
-        data={properties}
+        data={properties?.map((item) => ({
+          ...item.property,
+          $id: item.$id, // Retain unique ID for handling card press
+        }))}
         renderItem={({ item }) => (
           <WishlistCard item={item} onPress={() => handleCardPress(item.$id)} />
         )}

@@ -3,16 +3,15 @@ import React from "react";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { Models } from "react-native-appwrite";
+import WishlistButton from "./wishlistButton";
 
 interface CardProps {
   item: Models.Document;
   onPress: () => void;
 }
 
-export const FeaturedCard = ({
-  item: { image, name, address, rating, price },
-  onPress,
-}: CardProps) => {
+export const FeaturedCard = ({ item, onPress }: CardProps) => {
+  const { image, name, address, rating, price } = item;
   return (
     <TouchableOpacity onPress={onPress} className="flex  flex-col items-start w-60 h-80 relative">
       <Image source={{ uri: image }} className="size-full  rounded-2xl" />
@@ -29,14 +28,16 @@ export const FeaturedCard = ({
 
         <View className="flex flex-row items-center  justify-between w-full">
           <Text className="text-xl font-rubik-extraBold text-white mt-2">{`$ ${price}`}</Text>
-          <Image source={icons.heart} className="size-5" />
+          {/* <Image source={icons.heart} className="size-5" /> */}
+          <WishlistButton size={5} item={item} />
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export const Card = ({ item: { image, name, address, rating, price }, onPress }: CardProps) => {
+export const Card = ({ item, onPress }: CardProps) => {
+  const { image, name, address, rating, price } = item;
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -55,17 +56,16 @@ export const Card = ({ item: { image, name, address, rating, price }, onPress }:
 
         <View className="flex flex-row items-center  justify-between mt-2">
           <Text className="text-base font-rubik-bold text-primary-300">{`$ ${price}`}</Text>
-          <Image source={icons.heart} className="size-5" />
+          {/* <Image source={icons.heart} className="size-5" /> */}
+          <WishlistButton size={5} item={item} />
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export const WishlistCard = ({
-  item: { image, name, address, rating, price },
-  onPress,
-}: CardProps) => {
+export const WishlistCard = ({ item, onPress }: CardProps) => {
+  const { image, name, address, rating, price } = item;
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -86,9 +86,10 @@ export const WishlistCard = ({
         </View>
         <View className="flex items-center justify-between my-2">
           <View className="flex">
-            <TouchableOpacity>
-              <Image source={icons.heartFilled} className="size-5" />
-            </TouchableOpacity>
+            {/* <TouchableOpacity>
+              <Image source={wishlisted ? icons.heartFilled : icons.heart} className="size-5" />
+            </TouchableOpacity> */}
+            <WishlistButton size={5} item={item} />
           </View>
           <View>
             <Text className="text-base font-rubik-bold text-primary-300">{`$ ${price}`}</Text>

@@ -41,7 +41,7 @@ export default function Explore() {
       query: params.query!,
       limit: 20,
     });
-  }, [params.filter, params.query]);
+  }, [params.filter, params.query, refetch]);
 
   const handleCardPress = (id: string) => router.push(`/properties/${id}`);
 
