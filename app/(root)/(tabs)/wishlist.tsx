@@ -9,7 +9,7 @@ import { useAppwrite } from "@/lib/useAppwrite";
 import { getProperties, getWishlistProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
 import NoResults from "@/components/NoResults";
-import { useGlobalContext } from "@/lib/global-provider";
+import { useGlobalContext } from "@/context/global-provider";
 
 export default function Wishlist() {
   const { user } = useGlobalContext();
@@ -45,12 +45,12 @@ export default function Wishlist() {
       <FlatList
         data={properties?.map((item) => ({
           ...item.property,
-          $id: item.$id, // Retain unique ID for handling card press
+          WishlistId: item.$id, // Retain unique ID for handling card press
         }))}
         renderItem={({ item }) => (
-          <WishlistCard item={item} onPress={() => handleCardPress(item.$id)} />
+          <WishlistCard item={item} onPress={() => handleCardPress(item.$id || item.WishlistId)} />
         )}
-        keyExtractor={(item) => item.$id}
+        keyExtractor={(item) => item.$id || item.WishlistId}
         numColumns={2}
         contentContainerClassName="pb-32"
         showsVerticalScrollIndicator={false}
@@ -72,7 +72,7 @@ export default function Wishlist() {
                 <Image source={icons.backArrow} className="size-5" />
               </TouchableOpacity>
               <Text className="text-base mr-2 text-center font-rubik-medium text-black-300">
-                Search for Your Ideal Home
+                Search In your Wishlist
               </Text>
               <Image source={icons.bell} className="w-6 h-6" />
             </View>

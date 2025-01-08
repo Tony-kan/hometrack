@@ -18,6 +18,7 @@ import { facilities } from "@/constants/data";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getPropertyById } from "@/lib/appwrite";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import WishlistButton from "@/components/wishlistButton";
 //Todo : the map should use correct geo-location from database
 
 const Property = () => {
@@ -58,7 +59,8 @@ const Property = () => {
               </TouchableOpacity>
 
               <View className="flex flex-row items-center gap-3">
-                <Image source={icons.heart} className="size-7" tintColor={"#FF8000"} />
+                {/* <Image source={icons.heart} className="size-7" tintColor={"#FF8000"} /> */}
+                {property && <WishlistButton item={property} size={7} />}
                 <Image source={icons.send} className="size-7" />
               </View>
             </View>

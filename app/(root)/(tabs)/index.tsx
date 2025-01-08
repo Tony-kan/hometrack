@@ -6,7 +6,7 @@ import icons from "@/constants/icons";
 import Search from "@/components/search";
 import { Card, FeaturedCard } from "@/components/Cards";
 import Filters from "@/components/Filters";
-import { useGlobalContext } from "@/lib/global-provider";
+import { useGlobalContext } from "@/context/global-provider";
 // import seed from "@/lib/seed";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";

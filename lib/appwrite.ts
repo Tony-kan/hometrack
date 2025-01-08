@@ -153,6 +153,7 @@ export async function getPropertyById({ id }: { id: string }) {
 
 export async function getWishlistProperties({ userId }: { userId: string }) {
   try {
+    console.log("THe submitted user id : ", userId);
     const result = await databases.listDocuments(config.databaseId!, config.wishlistCollectionId!);
     return result.documents;
   } catch (error) {
