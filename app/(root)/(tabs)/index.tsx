@@ -1,4 +1,12 @@
-import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import images from "@/constants/images";
@@ -62,6 +70,14 @@ export default function Index() {
         contentContainerClassName="pb-32"
         showsVerticalScrollIndicator={false}
         columnWrapperClassName="flex gap-5 px-5"
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={propertiesLoading}
+        //     onRefresh={() => refetch({ filter: params.filter!, query: params.query!, limit: 6 })}
+        //     colors={["#FF8000"]}
+        //     progressBackgroundColor={"#FF8000"}
+        //   />
+        // }
         ListEmptyComponent={
           propertiesLoading ? (
             <ActivityIndicator size="large" className="text-primary-300 mt-5" />

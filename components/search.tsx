@@ -21,13 +21,13 @@ const Search = () => {
 
   return (
     <View className="flex flex-row items-center justify-between w-full px-4 rounded-lg bg-accent-100 border border-primary-100 mt-5 py-2">
-      <View className="flex-1 flex flex-row itemss-center justify-start z-50">
+      <View className="flex-1 flex flex-row items-center justify-start z-50">
         <Image source={icons.search} className="size-5" />
         <TextInput
           value={search}
           onChangeText={handleSearch}
           placeholder="Search for anything"
-          className="text-sm font-rubik  text-blacck-300 ml-2 flex-1"
+          className="text-sm font-rubik  text-black-300 ml-2 flex-1"
         />
       </View>
       <TouchableOpacity>
