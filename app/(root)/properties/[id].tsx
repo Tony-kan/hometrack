@@ -62,7 +62,7 @@ const Property = () => {
                 {/* <Image source={icons.heart} className="size-7" tintColor={"#FF8000"} /> */}
                 {property && (
                   <WishlistButton
-                    onWishlistChange={() => refetch({ id: id! })}
+                    // onWishlistChange={() => refetch({ id: id! })}
                     item={property}
                     size={7}
                   />

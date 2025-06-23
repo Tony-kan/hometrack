@@ -1,5 +1,5 @@
 import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import images from "@/constants/images";
 import icons from "@/constants/icons";
@@ -7,12 +7,13 @@ import Search from "@/components/search";
 import { WishlistCard } from "@/components/Cards";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getProperties, getWishlistProperties } from "@/lib/appwrite";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import NoResults from "@/components/NoResults";
 import { useGlobalContext } from "@/context/global-provider";
+import { Models } from "react-native-appwrite";
 
 export default function Wishlist() {
-  const { user } = useGlobalContext();
+  const { user, wishlist } = useGlobalContext();
 
   // console.log("user_id : ", user);
   console.log("user_id : ", user?.$id);
@@ -32,33 +33,37 @@ export default function Wishlist() {
   });
   console.log("wishlist properties : ", properties);
 
-  useEffect(() => {
-    refetch({
-      userId: user?.$id!,
-    });
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     refetch({ userId: user.$id });
+  //   }
+  // }, [user, refetch]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        // Refetch the wishlist properties from the backend
+        refetch({ userId: user.$id });
+      }
+    }, [user]), // Re-run if the user object itself changes (e.g., on logout)
+  );
 
   const handleCardPress = (id: string) => router.push(`/properties/${id}`);
+
+  const displayedProperties = useMemo(() => {
+    if (!properties) return [];
+    return properties.filter((prop: Models.Document) => wishlist.includes(prop.$id));
+  }, [properties, wishlist]);
 
   return (
     <SafeAreaView className="bg-white h-full">
       <FlatList
-        data={properties?.map((item) => ({
-          ...item.property,
-          WishlistId: item.$id, // Retain unique ID for handling card press
-        }))}
+        data={displayedProperties}
         renderItem={({ item }) => (
-          <WishlistCard
-            item={item}
-            onWishlistChange={() =>
-              refetch({
-                userId: user?.$id!,
-              })
-            }
-            onPress={() => handleCardPress(item.$id || item.WishlistId)}
-          />
+          <WishlistCard item={item} onPress={() => handleCardPress(item.$id || item.WishlistId)} />
         )}
-        keyExtractor={(item) => item.$id || item.WishlistId}
+        // keyExtractor={(item) => item.$id || item.WishlistId}
+        keyExtractor={(item: Models.Document) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
         showsVerticalScrollIndicator={false}

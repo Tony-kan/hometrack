@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import images from "@/constants/images";
 import icons from "@/constants/icons";
@@ -18,7 +18,7 @@ import { useGlobalContext } from "@/context/global-provider";
 // import seed from "@/lib/seed";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import NoResults from "@/components/NoResults";
 
 export default function Index() {
@@ -28,6 +28,7 @@ export default function Index() {
   const { data: latestProperties, loading: latestPropertiesLoading } = useAppwrite({
     fn: getLatestProperties,
   });
+
   const {
     data: properties,
     loading: propertiesLoading,
@@ -41,6 +42,17 @@ export default function Index() {
     },
     skip: true,
   });
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     refetchLatest({});
+  //     refetchProperties({
+  //       filter: params.filter!,
+  //       query: params.query!,
+  //       limit: 6,
+  //     });
+  //   }, [params.filter, params.query]),
+  // );
 
   useEffect(() => {
     refetch({
@@ -56,15 +68,7 @@ export default function Index() {
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={properties}
-        renderItem={({ item }) => (
-          <Card
-            item={item}
-            onWishlistChange={() =>
-              refetch({ filter: params.filter!, query: params.query!, limit: 6 })
-            }
-            onPress={() => handleCardPress(item.$id)}
-          />
-        )}
+        renderItem={({ item }) => <Card item={item} onPress={() => handleCardPress(item.$id)} />}
         keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
@@ -113,13 +117,7 @@ export default function Index() {
                 <FlatList
                   data={latestProperties}
                   renderItem={({ item }) => (
-                    <FeaturedCard
-                      item={item}
-                      onWishlistChange={() =>
-                        refetch({ filter: params.filter!, query: params.query!, limit: 6 })
-                      }
-                      onPress={() => handleCardPress(item.$id)}
-                    />
+                    <FeaturedCard item={item} onPress={() => handleCardPress(item.$id)} />
                   )}
                   keyExtractor={(item) => item.$id}
                   horizontal

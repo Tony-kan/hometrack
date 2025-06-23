@@ -151,15 +151,82 @@ export async function getPropertyById({ id }: { id: string }) {
   }
 }
 
+/**
+ * Fetches only the wishlist entries for a specific user.
+ * This is a critical performance improvement.
+ */
 export async function getWishlistProperties({ userId }: { userId: string }) {
+  if (!userId) return []; // Prevent errors if userId is not available
+
   try {
-    console.log("THe submitted user id : ", userId);
-    const result = await databases.listDocuments(config.databaseId!, config.wishlistCollectionId!);
-    return result.documents;
+    const result = await databases.listDocuments(
+      config.databaseId!,
+      config.wishlistCollectionId!,
+      [Query.equal("user_id", userId), Query.limit(100)], // Filter by user_id on the server!
+    );
+    // The result now contains wishlist documents, each with a 'property' relation
+    // We extract the actual property data from the relation
+    return result.documents.map((doc) => doc.property);
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching wishlist properties:", error);
+    return [];
   }
 }
+
+/**
+ * Toggles a property's presence in the user's wishlist.
+ * This function is now more robust and handles the add/remove logic cleanly.
+ */
+export async function toggleWishlistProperty({
+  userId,
+  propertyId,
+}: {
+  userId: string;
+  propertyId: string;
+}) {
+  try {
+    // Check if the property already exists in the user's wishlist
+    const existingWishlist = await databases.listDocuments(
+      config.databaseId!,
+      config.wishlistCollectionId!,
+      [Query.equal("user_id", userId), Query.equal("property", propertyId)],
+    );
+
+    if (existingWishlist.documents.length > 0) {
+      // If it exists, remove it from the wishlist
+      const documentId = existingWishlist.documents[0].$id;
+      await databases.deleteDocument(config.databaseId!, config.wishlistCollectionId!, documentId);
+      // Note: Updating the 'wishlisted' field on the property itself is optional.
+      // A global client-side state is often a better approach for UI updates.
+      return { action: "removed", propertyId };
+    } else {
+      // If it doesn't exist, add it to the wishlist
+      const result = await databases.createDocument(
+        config.databaseId!,
+        config.wishlistCollectionId!,
+        ID.unique(),
+        {
+          user_id: userId,
+          property: propertyId, // This assumes 'property' is a relationship attribute
+        },
+      );
+      return { action: "added", document: result };
+    }
+  } catch (error) {
+    console.error("Error toggling wishlist:", error);
+    throw new Error("Failed to update wishlist.");
+  }
+}
+
+// export async function getWishlistProperties({ userId }: { userId: string }) {
+//   try {
+//     console.log("THe submitted user id : ", userId);
+//     const result = await databases.listDocuments(config.databaseId!, config.wishlistCollectionId!);
+//     return result.documents;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
 export async function createWishlistProperties({
   userId,
