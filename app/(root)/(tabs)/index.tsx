@@ -20,6 +20,7 @@ import { useAppwrite } from "@/lib/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useEffect, useCallback } from "react";
 import NoResults from "@/components/NoResults";
+import { getGreeting } from "@/lib/utils";
 
 export default function Index() {
   const { user } = useGlobalContext();
@@ -95,7 +96,7 @@ export default function Index() {
               <View className="flex flex-row items-center">
                 <Image source={{ uri: user?.avatar }} className="size-12 rounded-full" />
                 <View className="flex items-start ml-2 justify-center">
-                  <Text className="text-xs font-rubik text-black-100">Good Morning</Text>
+                  <Text className="text-xs font-rubik text-black-100">{getGreeting()}</Text>
                   <Text className="text-base font-rubik-medium text-black-300">{user?.name}</Text>
                 </View>
               </View>
